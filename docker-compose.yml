@@ -1,0 +1,11 @@
+services:
+  github-runner:
+    image: github-runner:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - RUNNER_VERSION=${RUNNER_VERSION}
+        - VALIDATION_HASH=${VALIDATION_HASH}
+    env_file:
+      - .env
