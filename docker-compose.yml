@@ -9,3 +9,7 @@ services:
         - VALIDATION_HASH=${VALIDATION_HASH}
     env_file:
       - .env
+    volumes:   
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./runner-data:/actions-runner
+
