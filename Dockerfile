@@ -11,7 +11,19 @@ RUN apt-get update -y && apt-get upgrade -y && useradd -m docker
 # install python and the packages the your code depends on along with jq so we can parse JSON
 # add additional packages as necessary
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    curl jq build-essential libssl-dev libffi-dev libicu-dev python3 python3-venv python3-dev python3-pip
+    curl jq build-essential libssl-dev libffi-dev libicu-dev \
+    python3 python3-venv python3-dev python3-pip ca-certificates \
+    gnupg lsb-release \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+    # Add Docker’s official GPG key
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | tee /etc/apt/keyrings/docker.asc > /dev/null && \
+    chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the Docker repository
+RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN apt-get update && apt-get install -y docker-ce-cli && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # cd into the user directory, download and unzip the github actions runner
 RUN cd /home/docker && mkdir actions-runner && cd actions-runner \

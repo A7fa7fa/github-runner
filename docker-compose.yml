@@ -1,6 +1,7 @@
 services:
   github-runner:
     image: github-runner:latest
+    container_name: github-runner
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,7 +10,7 @@ services:
         - VALIDATION_HASH=${VALIDATION_HASH}
     env_file:
       - .env
-    volumes:   
+    volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./runner-data:/actions-runner
 

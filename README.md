@@ -24,3 +24,10 @@ or let compose handle everything
 ```bash
 docker-compose up --build
 ```
+
+ensure the runner has correct permission to docker host machine
+```bash
+sudo usermod -aG docker $(whoami)
+optional
+chmod 666 /var/run/docker.sock
+```
