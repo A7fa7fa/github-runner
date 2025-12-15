@@ -6,6 +6,8 @@ start.sh is set as entrypoint and registers and authorizes with github
 
 ## start up
 
+Get your version and checksum from https://github.com/actions/runner/releases. 
+
 Populate env file and build image.
 
 ```bash
